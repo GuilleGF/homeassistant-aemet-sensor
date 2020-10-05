@@ -1,7 +1,8 @@
 import requests
-from datetime import timedelta
 from logging import getLogger
 from homeassistant.util import Throttle
+
+from .const import *
 
 _LOGGER = getLogger(__name__)
 
@@ -17,25 +18,17 @@ from homeassistant.const import (
     HTTP_OK
 )
 
-ATTR_ELEVATION = 'elevation'
-ATTR_LAST_UPDATE = 'last_update'
-ATTR_STATION_NAME = 'station_name'
-ATTR_WEATHER_PRECIPITATION = 'precipitation'
-ATTR_WEATHER_SNOW = 'snow'
-ATTR_WEATHER_WIND_SPEED = 'wind_speed'
-ATTR_WEATHER_WIND_MAX_SPEED = 'wind_max_speed'
-ATTR_WEATHER_WIND_BEARING = 'wind_bearing'
-
 ATTR_MAPPINGS = {
     ATTR_LONGITUDE: 'lon',
     ATTR_LATITUDE: 'lat',
     ATTR_ELEVATION: 'alt',
+    ATTR_LAST_UPDATE: 'fint',
     ATTR_STATION_NAME: 'ubi',
     ATTR_WEATHER_PRECIPITATION: 'prec',
     ATTR_WEATHER_PRESSURE: 'pres',
     ATTR_WEATHER_TEMPERATURE: 'ta',
+    ATTR_WEATHER_TEMP_LOW: 'tamin',
     ATTR_WEATHER_HUMIDITY: 'hr',
-    ATTR_LAST_UPDATE: 'fint',
     ATTR_WEATHER_VISIBILITY: 'vis',
     ATTR_WEATHER_SNOW: 'nieve',
     ATTR_WEATHER_WIND_SPEED: 'vv',

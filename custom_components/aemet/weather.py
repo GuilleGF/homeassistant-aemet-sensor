@@ -30,18 +30,7 @@ from homeassistant.const import (
 import homeassistant.helpers.config_validation as cv
 from homeassistant.helpers.entity import Entity
 
-from .AemetApi import (
-    AemetApi,
-    ATTR_ELEVATION, 
-    ATTR_LAST_UPDATE, 
-    ATTR_STATION_NAME, 
-    ATTR_WEATHER_PRECIPITATION, 
-    ATTR_WEATHER_SNOW, 
-    ATTR_WEATHER_WIND_SPEED, 
-    ATTR_WEATHER_WIND_BEARING,
-    CONF_ATTRIBUTION, 
-    CONF_STATION_ID
-)
+from .AemetApi import *
 
 DEFAULT_NAME = 'AEMET'
 
@@ -118,7 +107,7 @@ class AemetWeather(WeatherEntity):
     @property
     def ozone(self):
         """Return the ozone level."""
-        return None
+        return self._aemetApi.get_data(ATTR_WEATHER_OZONE)
 
     @property
     def pressure(self):
@@ -133,7 +122,14 @@ class AemetWeather(WeatherEntity):
     @property
     def condition(self):
         """Return the weather condition."""
-        return None
+        condition = self._aemetApi.get_data("condition")
+        if condition is None:
+            condition = self._aemet_forecast_current_hour.get(
+                "condition", "desconocido"
+            )
+
+        # Night conditions get an "n" appended, if not found lets try without that "n"
+        return MAP_CONDITION.get(condition, MAP_CONDITION.get(condition[:2]))
 
     @property
     def forecast(self):
